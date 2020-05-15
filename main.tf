@@ -4,7 +4,9 @@ resource "aws_iam_role" "this" {
 }
 
 data "aws_iam_policy_document" "assume_policy" {
+  override_json = var.assume_policy != "" ? var.assume_policy : null
   statement {
+    sid     = "AssumeFromEksServiceAccount"
     actions = ["sts:AssumeRoleWithWebIdentity"]
     effect  = "Allow"
 
@@ -27,7 +29,6 @@ resource "aws_iam_policy" "this" {
 }
 
 resource "aws_iam_role_policy_attachment" "via_json" {
-  # count  = var.policy_json != "none" && var.policy_arn == "none" ? 1 : 0
   role       = aws_iam_role.this.name
   policy_arn = aws_iam_policy.this[0].arn
 }

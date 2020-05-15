@@ -29,3 +29,9 @@ variable "policy_arn" {
   type = string
   default = "none"
 }
+
+variable "assume_policy" {
+  description = "IAM Role Assume Policy used to override fdefault one"
+  type = string
+  default = ""
+}
